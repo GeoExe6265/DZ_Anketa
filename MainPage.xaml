@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AnketaApp.MainPage"
+             Title="Анкета">
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+            <HorizontalStackLayout Spacing="15" HorizontalOptions="Center">
+                <Image Source="anketa.svg" Aspect="AspectFit" HeightRequest="60" />
+                <Label Text="IT-Анкета" FontSize="28" FontAttributes="Bold" VerticalOptions="Center" />
+            </HorizontalStackLayout>
+
+            <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto"
+                  ColumnDefinitions="*,*" RowSpacing="12" ColumnSpacing="10">
+                <Label Grid.Row="0" Grid.Column="0" Text="Имя *:" VerticalOptions="Center" />
+                <Entry Grid.Row="0" Grid.Column="1" x:Name="NameEntry" Placeholder="Обязательно" Keyboard="Text" MaxLength="50" Margin="0,2" />
+
+                <Label Grid.Row="1" Grid.Column="0" Text="Телефон *:" VerticalOptions="Center" />
+                <Entry Grid.Row="1" Grid.Column="1" x:Name="PhoneEntry" Placeholder="Обязательно" Keyboard="Telephone" MaxLength="12" Margin="0,2" />
+
+                <Label Grid.Row="2" Grid.Column="0" Text="Дата рождения:" VerticalOptions="Center" />
+                <DatePicker Grid.Row="2" Grid.Column="1" x:Name="BirthDatePicker" Format="dd.MM.yyyy" Date="2000-01-01" MinimumDate="1950-01-01" MaximumDate="2025-12-31" />
+
+                <Label Grid.Row="3" Grid.Column="0" Text="Опыт работы:" VerticalOptions="Start" />
+                <VerticalStackLayout Grid.Row="3" Grid.Column="1" Spacing="5">
+                    <RadioButton x:Name="RbJunior" Content="Junior" GroupName="Level" Value="Junior" IsChecked="True" />
+                    <RadioButton x:Name="RbMiddle" Content="Middle" GroupName="Level" Value="Middle" />
+                    <RadioButton x:Name="RbSenior" Content="Senior" GroupName="Level" Value="Senior" />
+                </VerticalStackLayout>
+
+                <Label Grid.Row="4" Grid.Column="0" Text="Технология:" VerticalOptions="Center" />
+                <Picker Grid.Row="4" Grid.Column="1" x:Name="TechPicker" Title="Выберите язык">
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>C#</x:String>
+                            <x:String>Python</x:String>
+                            <x:String>Java</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                </Picker>
+
+                <Label Grid.Row="5" Grid.Column="0" Text="Стаж (лет):" VerticalOptions="Center" />
+                <HorizontalStackLayout Grid.Row="5" Grid.Column="1" Spacing="10">
+                    <Slider x:Name="ExpSlider" Minimum="0" Maximum="20" Value="2" WidthRequest="130" />
+                    <Label Text="{Binding Source={x:Reference ExpSlider}, Path=Value, Mode=OneWay, StringFormat='{0:F0}'}" VerticalOptions="Center" />
+                </HorizontalStackLayout>
+
+                <Label Grid.Row="6" Grid.Column="0" Text="Дополнительно:" VerticalOptions="Center" />
+                <VerticalStackLayout Grid.Row="6" Grid.Column="1" Spacing="5">
+                    <HorizontalStackLayout Spacing="5">
+                        <CheckBox x:Name="CbAgree" IsChecked="False" Color="Green" />
+                        <Label Text="Согласен с правилами" VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+                    <HorizontalStackLayout Spacing="5">
+                        <CheckBox x:Name="CbSubscribe" IsChecked="True" Color="Blue" />
+                        <Label Text="Подписка на рассылку" VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+
+                <Label Grid.Row="7" Grid.Column="0" Text="Ищу удаленку:" VerticalOptions="Center" />
+                <Switch Grid.Row="7" Grid.Column="1" x:Name="RemoteSwitch" IsToggled="False" OnColor="LightGreen" HorizontalOptions="Start" />
+
+                <Label Grid.Row="8" Grid.Column="0" Text="О себе:" VerticalOptions="Start" />
+                <Editor Grid.Row="8" Grid.Column="1" x:Name="BioEditor" Placeholder="Доп. инфо..." AutoSize="TextChanges" MaxLength="300" HeightRequest="70" />
+
+                <Button Grid.Row="9" Grid.Column="0" Text="Показать результат" Clicked="OnShowResultClicked" Margin="5" />
+                <Button Grid.Row="9" Grid.Column="1" Text="Очистить" Clicked="OnClearClicked" Margin="5" />
+
+                <Border Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="2" x:Name="ResultFrame" IsVisible="False" BackgroundColor="#F0F0F0" Padding="15" Margin="0,10,0,0">
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="Сводка ответов:" FontAttributes="Bold" FontSize="16" />
+                        <Label x:Name="ResultText" FontSize="14" />
+                    </VerticalStackLayout>
+                </Border>
+            </Grid>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
